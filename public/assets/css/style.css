@@ -73,18 +73,21 @@ body {
   font-size: 14px;
 }
 
+.address-box {
+  width: 100%;
+  border: 1px dashed var(--color-primary-navy);
+  border-radius: 10px;
+  background: var(--color-bg-light);
+  padding: 14px 16px;
+  margin-bottom: 16px;
+}
+
 .address-text {
   font-family: 'Courier New', Courier, monospace;
   font-size: 15px;
   word-break: break-all;
   line-height: 1.6;
   color: var(--color-navy-dark);
-  margin-bottom: 16px;
-}
-
-.qrcode {
-  margin-bottom: 16px;
-  border-radius: 8px;
 }
 
 .copy-btn {

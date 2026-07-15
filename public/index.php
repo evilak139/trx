@@ -60,8 +60,9 @@ $hasService = is_valid_service_url($serviceUrl);
 
   <?php if ($hasAddress): ?>
   <section class="address-card">
-    <div class="address-text" id="address-text"><?= e($address) ?></div>
-    <div id="qrcode" class="qrcode"></div>
+    <div class="address-box">
+      <div class="address-text" id="address-text"><?= e($address) ?></div>
+    </div>
     <button type="button" class="copy-btn" id="copy-btn" data-address="<?= e($address) ?>">
       <span class="copy-btn-label">复制地址</span>
     </button>
@@ -82,7 +83,6 @@ $hasService = is_valid_service_url($serviceUrl);
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>window.__COPY_TIP__ = <?= json_encode($copyTip, JSON_UNESCAPED_UNICODE) ?>;</script>
-<script src="assets/vendor/qrcode.min.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>

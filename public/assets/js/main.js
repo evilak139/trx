@@ -55,17 +55,6 @@
     });
   }
 
-  var qrEl = document.getElementById('qrcode');
-  var addressEl = document.getElementById('address-text');
-  if (qrEl && addressEl && window.QRCode) {
-    new QRCode(qrEl, {
-      text: addressEl.textContent.trim(),
-      width: 160,
-      height: 160,
-      correctLevel: QRCode.CorrectLevel.M,
-    });
-  }
-
   var copyBtn = document.getElementById('copy-btn');
   if (copyBtn) {
     copyBtn.addEventListener('click', function () {
