@@ -19,7 +19,7 @@ function admin_head(string $title, string $active = ''): void
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?= e($title) ?> - 后台管理</title>
 <meta name="csrf-token" content="<?= e(Auth::csrfToken()) ?>">
-<link rel="stylesheet" href="/admin/assets/css/admin.css">
+<link rel="stylesheet" href="/admin/assets/css/admin.css?v=<?= e(asset_version(__DIR__ . '/../assets/css/admin.css')) ?>">
 </head>
 <body>
 <div class="admin-shell">
@@ -48,7 +48,7 @@ function admin_foot(): void
 ?>
   </main>
 </div>
-<script src="/admin/assets/js/admin.js"></script>
+<script src="/admin/assets/js/admin.js?v=<?= e(asset_version(__DIR__ . '/../assets/js/admin.js')) ?>"></script>
 </body>
 </html>
 <?php

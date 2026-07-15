@@ -59,7 +59,7 @@ function icon(string $name): string
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?= e($siteTitle) ?></title>
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/style.css?v=<?= e(asset_version(__DIR__ . '/assets/css/style.css')) ?>">
 </head>
 <body>
 
@@ -143,6 +143,6 @@ function icon(string $name): string
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>window.__COPY_TIP__ = <?= json_encode($copyTip, JSON_UNESCAPED_UNICODE) ?>;</script>
-<script src="assets/js/main.js"></script>
+<script src="assets/js/main.js?v=<?= e(asset_version(__DIR__ . '/assets/js/main.js')) ?>"></script>
 </body>
 </html>

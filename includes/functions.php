@@ -7,6 +7,13 @@ function e(string $value): string
     return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
 }
 
+/** 用文件修改时间作为静态资源版本号，避免 CDN/浏览器缓存旧的 CSS/JS */
+function asset_version(string $absolutePath): string
+{
+    $mtime = @filemtime($absolutePath);
+    return $mtime !== false ? (string) $mtime : '1';
+}
+
 function json_response($data, int $status = 200): void
 {
     http_response_code($status);
