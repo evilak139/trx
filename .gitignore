@@ -1,0 +1,15 @@
+# 安装生成的敏感配置，绝不提交
+/config/database.php
+/.env
+
+# 安装完成锁文件（每个部署环境各自生成）
+/public/install/install.lock
+
+# 用户上传内容与运行日志
+/public/uploads/*
+!/public/uploads/.gitkeep
+/logs/*.log
+
+# 系统/编辑器
+.DS_Store
+Thumbs.db
