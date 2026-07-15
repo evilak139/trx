@@ -13,7 +13,9 @@
 body {
   margin: 0;
   font-family: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-  background: linear-gradient(180deg, var(--color-bg-light) 0%, var(--color-white) 60%);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(47, 168, 79, 0.08), transparent 45%),
+    linear-gradient(180deg, var(--color-bg-light) 0%, var(--color-white) 55%);
   color: var(--color-primary-navy);
   min-height: 100vh;
 }
@@ -21,23 +23,51 @@ body {
 .page {
   max-width: 480px;
   margin: 0 auto;
-  padding: 32px 20px 64px;
+  padding: 36px 20px 64px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.logo-wrap { margin-bottom: 12px; }
+.icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* ---------- Logo ---------- */
+
+.logo-wrap {
+  margin-bottom: 14px;
+  position: relative;
+}
+
+.logo-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: var(--gradient-accent);
+  opacity: 0.35;
+  filter: blur(10px);
+  z-index: 0;
+  animation: pulse-glow 3.5s ease-in-out infinite;
+}
 
 .logo {
+  position: relative;
+  z-index: 1;
   width: 88px;
   height: 88px;
   border-radius: 50%;
   object-fit: cover;
-  box-shadow: 0 4px 16px rgba(27, 58, 107, 0.15);
+  box-shadow: 0 4px 16px rgba(27, 58, 107, 0.18);
+  border: 3px solid var(--color-white);
 }
 
 .logo-placeholder {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -45,108 +75,252 @@ body {
   color: var(--color-white);
   font-size: 28px;
   font-weight: 700;
+  border: 3px solid var(--color-white);
 }
 
 .site-title {
-  font-size: 20px;
+  font-size: 21px;
   font-weight: 700;
   text-align: center;
-  margin: 4px 0 24px;
+  margin: 4px 0 26px;
   color: var(--color-primary-navy);
+  letter-spacing: 0.2px;
 }
+
+/* ---------- Address card ---------- */
 
 .address-card {
   width: 100%;
+  position: relative;
   background: var(--color-white);
-  border: 1px solid #dbe9f7;
-  border-radius: 16px;
-  box-shadow: 0 6px 24px rgba(27, 58, 107, 0.08);
-  padding: 24px 20px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(27, 58, 107, 0.1);
+  padding: 26px 22px 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  overflow: hidden;
+}
+
+.address-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: var(--gradient-accent);
 }
 
 .address-card-empty {
   color: #7a8ba3;
   font-size: 14px;
+  padding: 32px 22px;
+}
+
+.address-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--color-green);
+  text-transform: uppercase;
+  margin-bottom: 12px;
 }
 
 .address-box {
   width: 100%;
-  border: 1px dashed var(--color-primary-navy);
-  border-radius: 10px;
-  background: var(--color-bg-light);
-  padding: 14px 16px;
-  margin-bottom: 16px;
+  border-radius: 14px;
+  padding: 3px;
+  margin-bottom: 18px;
+  background: var(--gradient-accent);
+  animation: glow-ring 3s ease-in-out infinite;
 }
 
 .address-text {
+  border-radius: 12px;
+  background: var(--color-bg-light);
   font-family: 'Courier New', Courier, monospace;
-  font-size: 15px;
-  word-break: break-all;
+  font-size: clamp(10px, 3.2vw, 15px);
+  letter-spacing: -0.3px;
+  white-space: nowrap;
+  overflow-x: auto;
   line-height: 1.6;
   color: var(--color-navy-dark);
+  padding: 14px 10px;
+  scrollbar-width: thin;
 }
+
+.address-text::-webkit-scrollbar { height: 4px; }
+.address-text::-webkit-scrollbar-thumb { background: rgba(27, 58, 107, 0.25); border-radius: 4px; }
 
 .copy-btn {
   width: 100%;
-  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 20px;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   background: var(--color-primary-navy);
   color: var(--color-white);
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s, box-shadow 0.2s;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
 }
 
 .copy-btn:hover {
   background: var(--color-navy-dark);
-  box-shadow: 0 0 0 3px rgba(47, 168, 79, 0.25);
+  box-shadow: 0 0 0 4px rgba(47, 168, 79, 0.2);
+  transform: translateY(-1px);
 }
+
+.copy-btn:active { transform: translateY(0); }
 
 .copy-btn.copied {
   background: var(--color-green);
 }
+
+/* ---------- Content sections ---------- */
 
 .content-section {
   width: 100%;
   margin-top: 20px;
   background: var(--color-white);
   border: 1px solid #dbe9f7;
-  border-radius: 16px;
-  padding: 18px 20px;
+  border-radius: 18px;
+  padding: 20px 22px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.content-section:hover {
+  box-shadow: 0 8px 22px rgba(27, 58, 107, 0.08);
 }
 
 .section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 15px;
   font-weight: 700;
-  margin: 0 0 12px;
+  margin: 0 0 14px;
   color: var(--color-primary-navy);
-  padding-bottom: 8px;
+  padding-bottom: 10px;
   border-bottom: 2px solid var(--color-bg-light);
+}
+
+.section-title .icon {
+  color: var(--color-green);
+  background: var(--color-bg-light);
+  border-radius: 8px;
+  padding: 5px;
+  width: 28px;
+  height: 28px;
 }
 
 .section-body {
   font-size: 14px;
-  line-height: 1.8;
+  line-height: 1.85;
   color: var(--color-navy-dark);
 }
 
+.section-body p { margin: 0 0 10px; }
+.section-body p:last-child { margin-bottom: 0; }
 .section-body img { max-width: 100%; border-radius: 8px; }
-.section-body a { color: var(--color-green); }
+.section-body a { color: var(--color-green); font-weight: 600; }
+.section-body strong { color: var(--color-primary-navy); }
+
+/* 有序列表：使用步骤，做成带编号圆点的时间轴 */
+.section-body ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: step;
+}
+
+.section-body ol li {
+  position: relative;
+  counter-increment: step;
+  padding: 2px 0 18px 38px;
+  margin: 0;
+}
+
+.section-body ol li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--gradient-accent);
+  color: var(--color-white);
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-body ol li::after {
+  content: '';
+  position: absolute;
+  left: 12px;
+  top: 26px;
+  bottom: 2px;
+  width: 2px;
+  background: var(--color-bg-light);
+}
+
+.section-body ol li:last-child::after { display: none; }
+.section-body ol li:last-child { padding-bottom: 2px; }
+
+/* 无序列表：自定义圆点 */
+.section-body ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.section-body ul li {
+  position: relative;
+  padding: 0 0 10px 20px;
+}
+
+.section-body ul li:last-child { padding-bottom: 0; }
+
+.section-body ul li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 9px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-green);
+}
 
 .section-notice {
   background: #fdf6e3;
-  border-color: var(--color-gold);
+  border-color: rgba(217, 178, 60, 0.4);
 }
 .section-notice .section-title {
   color: #9a7d1a;
   border-bottom-color: rgba(217, 178, 60, 0.3);
 }
+.section-notice .section-title .icon {
+  color: var(--color-gold);
+  background: rgba(217, 178, 60, 0.15);
+}
+.section-notice .section-body ul li::before {
+  background: var(--color-gold);
+}
+.section-notice .section-body strong { color: #9a7d1a; }
 
 .section-disclaimer {
   background: transparent;
@@ -157,18 +331,36 @@ body {
   color: #7a8ba3;
   font-size: 12px;
 }
+.section-disclaimer .section-title .icon {
+  color: #7a8ba3;
+  background: #f2f6fb;
+  width: 24px;
+  height: 24px;
+}
+.section-disclaimer .section-body ul li::before {
+  background: #a9b8cc;
+  width: 5px;
+  height: 5px;
+}
+
+/* ---------- FAQ ---------- */
 
 .faq-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .faq-item {
   border: 1px solid #eef3f9;
-  border-radius: 10px;
-  padding: 10px 14px;
+  border-radius: 12px;
+  padding: 12px 14px;
   background: var(--color-bg-light);
+  transition: border-color 0.2s;
+}
+
+.faq-item[open] {
+  border-color: var(--color-green);
 }
 
 .faq-item summary {
@@ -177,46 +369,73 @@ body {
   font-weight: 600;
   color: var(--color-primary-navy);
   list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .faq-item summary::-webkit-details-marker { display: none; }
 
 .faq-item summary::before {
   content: '+';
-  display: inline-block;
-  width: 16px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-white);
   color: var(--color-green);
   font-weight: 700;
+  font-size: 14px;
+  transition: transform 0.2s, background 0.2s, color 0.2s;
 }
 
 .faq-item[open] summary::before {
   content: '－';
+  background: var(--color-green);
+  color: var(--color-white);
 }
 
 .faq-answer {
-  margin-top: 8px;
-  padding-top: 8px;
+  margin: 10px 0 0 30px;
+  padding-top: 10px;
   border-top: 1px dashed #dbe9f7;
   font-size: 13px;
   line-height: 1.7;
   color: var(--color-navy-dark);
+  animation: fade-in-answer 0.25s ease;
 }
+
+/* ---------- Floating customer service ---------- */
 
 .service-fab {
   position: fixed;
   top: 16px;
   right: 16px;
   z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 6px;
   background: var(--color-white);
   color: var(--color-primary-navy);
   border: 1px solid #dbe9f7;
   border-radius: 999px;
-  padding: 8px 16px;
+  padding: 9px 18px;
   font-size: 13px;
   font-weight: 600;
   text-decoration: none;
-  box-shadow: 0 4px 12px rgba(27, 58, 107, 0.12);
+  box-shadow: 0 4px 14px rgba(27, 58, 107, 0.14);
+  transition: transform 0.15s, box-shadow 0.15s;
 }
+
+.service-fab:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(27, 58, 107, 0.2);
+}
+
+/* ---------- Toast ---------- */
 
 .toast {
   position: fixed;
@@ -234,6 +453,7 @@ body {
   pointer-events: none;
   transition: opacity 0.25s, transform 0.25s;
   text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 .toast.show {
@@ -241,6 +461,45 @@ body {
   transform: translateX(-50%) translateY(0);
 }
 
+/* ---------- Entrance animation ---------- */
+
+.fade-in {
+  animation: fade-in-up 0.55s ease both;
+}
+
+.page > .fade-in:nth-of-type(1) { animation-delay: 0.05s; }
+.page > .fade-in:nth-of-type(2) { animation-delay: 0.12s; }
+.page > .fade-in:nth-of-type(3) { animation-delay: 0.19s; }
+.page > .fade-in:nth-of-type(4) { animation-delay: 0.26s; }
+.page > .fade-in:nth-of-type(5) { animation-delay: 0.33s; }
+.page > .fade-in:nth-of-type(6) { animation-delay: 0.4s; }
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in-answer {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes glow-ring {
+  0%, 100% { box-shadow: 0 0 0 rgba(47, 168, 79, 0); }
+  50% { box-shadow: 0 0 14px rgba(47, 168, 79, 0.35); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in, .logo-wrap::before, .address-box, .faq-answer {
+    animation: none !important;
+  }
+}
+
 @media (max-width: 600px) {
-  .page { padding: 24px 16px 48px; }
+  .page { padding: 28px 16px 48px; }
 }
