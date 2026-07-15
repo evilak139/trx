@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @return array<string, string>
  */
 return [
-    'config' => "CREATE TABLE `{prefix}config` (
+    'config' => "CREATE TABLE IF NOT EXISTS `{prefix}config` (
   `id` TINYINT UNSIGNED NOT NULL DEFAULT 1,
   `site_title` VARCHAR(100) NOT NULL DEFAULT 'TRX能量兑换',
   `logo_path` VARCHAR(255) DEFAULT NULL,
@@ -26,7 +26,7 @@ return [
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
 
-    'admins' => "CREATE TABLE `{prefix}admins` (
+    'admins' => "CREATE TABLE IF NOT EXISTS `{prefix}admins` (
   `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   `username` VARCHAR(50) NOT NULL,
   `password_hash` VARCHAR(255) NOT NULL,
@@ -37,7 +37,7 @@ return [
   UNIQUE KEY `uniq_username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
 
-    'address_history' => "CREATE TABLE `{prefix}address_history` (
+    'address_history' => "CREATE TABLE IF NOT EXISTS `{prefix}address_history` (
   `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   `address` VARCHAR(64) NOT NULL,
   `enabled_at` DATETIME NOT NULL,
@@ -46,7 +46,7 @@ return [
   INDEX `idx_address` (`address`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
 
-    'copy_events' => "CREATE TABLE `{prefix}copy_events` (
+    'copy_events' => "CREATE TABLE IF NOT EXISTS `{prefix}copy_events` (
   `id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   `address` VARCHAR(64) NOT NULL,
   `ip` VARCHAR(45) DEFAULT NULL,
@@ -55,7 +55,7 @@ return [
   INDEX `idx_address_created` (`address`, `created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
 
-    'transfer_records' => "CREATE TABLE `{prefix}transfer_records` (
+    'transfer_records' => "CREATE TABLE IF NOT EXISTS `{prefix}transfer_records` (
   `id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   `address` VARCHAR(64) NOT NULL,
   `tx_hash` VARCHAR(80) NOT NULL,
@@ -67,7 +67,7 @@ return [
   INDEX `idx_address_tx_time` (`address`, `tx_timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
 
-    'faqs' => "CREATE TABLE `{prefix}faqs` (
+    'faqs' => "CREATE TABLE IF NOT EXISTS `{prefix}faqs` (
   `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   `question` VARCHAR(255) NOT NULL,
   `answer` TEXT NOT NULL,

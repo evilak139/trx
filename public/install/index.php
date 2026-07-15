@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 require __DIR__ . '/includes/bootstrap.php';
 install_guard();
+
+// 每次重新访问安装向导入口都视为一次全新的安装流程，清空上一次残留的会话状态，
+// 避免"删库重装"时因为旧会话里的 tables_created/admin_created 等标记仍为 true
+// 而跳过实际的建表/建管理员/写配置步骤，导致新数据库里缺数据、旧配置文件未更新。
+unset($_SESSION['install']);
+
 require __DIR__ . '/includes/layout.php';
 
 $checks = [];
