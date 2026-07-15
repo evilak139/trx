@@ -187,4 +187,14 @@ table.data-table th, table.data-table td {
   margin-bottom: 10px;
 }
 
-#rules-editor { background: var(--color-white); min-height: 220px; }
+.quill-editor { background: var(--color-white); min-height: 160px; }
+
+.faq-edit-card {
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  background: var(--color-bg-light);
+}
+.faq-edit-card:last-child { margin-bottom: 0; }
+.faq-edit-card .form-group { margin-bottom: 10px; }

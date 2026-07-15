@@ -7,6 +7,7 @@ function admin_head(string $title, string $active = ''): void
     $nav = [
         'dashboard' => ['label' => '数据面板', 'href' => '/admin/dashboard.php'],
         'config' => ['label' => '系统配置', 'href' => '/admin/config/index.php'],
+        'content' => ['label' => '文案配置', 'href' => '/admin/content/index.php'],
         'accounts' => ['label' => '账号管理', 'href' => '/admin/accounts.php'],
     ];
     $username = Auth::username();

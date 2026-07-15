@@ -34,7 +34,6 @@ $oldAddress = trim((string) ($current['receive_address'] ?? ''));
 $siteTitle = trim((string) ($_POST['site_title'] ?? ''));
 $serviceUrl = trim((string) ($_POST['customer_service_url'] ?? ''));
 $newAddress = trim((string) ($_POST['receive_address'] ?? ''));
-$rulesHtml = sanitize_html((string) ($_POST['rules_html'] ?? ''));
 $copyTip = trim((string) ($_POST['copy_tip_text'] ?? ''));
 $apiKey = trim((string) ($_POST['trongrid_api_key'] ?? ''));
 $confirmPassword = (string) ($_POST['address_confirm_password'] ?? '');
@@ -71,9 +70,9 @@ if (!empty($errors)) {
 $pdo->beginTransaction();
 try {
     $update = $pdo->prepare(
-        "UPDATE `{$configTable}` SET site_title = ?, customer_service_url = ?, receive_address = ?, rules_html = ?, copy_tip_text = ?, trongrid_api_key = ? WHERE id = 1"
+        "UPDATE `{$configTable}` SET site_title = ?, customer_service_url = ?, receive_address = ?, copy_tip_text = ?, trongrid_api_key = ? WHERE id = 1"
     );
-    $update->execute([$siteTitle, $serviceUrl, $newAddress, $rulesHtml, $copyTip, $apiKey ?: null]);
+    $update->execute([$siteTitle, $serviceUrl, $newAddress, $copyTip, $apiKey ?: null]);
 
     if ($addressChanged) {
         if ($oldAddress !== '') {

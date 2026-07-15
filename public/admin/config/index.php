@@ -22,7 +22,6 @@ require __DIR__ . '/../includes/layout.php';
 admin_head('系统配置', 'config');
 $csrf = Auth::csrfToken();
 ?>
-<link rel="stylesheet" href="/admin/assets/vendor/quill/quill.snow.css">
 
 <?php if ($flash): ?>
 <div class="alert alert-<?= e($flash['type']) ?>"><?= e($flash['message']) ?></div>
@@ -80,32 +79,8 @@ $csrf = Auth::csrfToken();
     </div>
   </div>
 
-  <div class="card">
-    <h2 style="margin-top:0;font-size:16px;">规则说明</h2>
-    <div id="rules-editor"><?= $config['rules_html'] ?? '' ?></div>
-    <textarea name="rules_html" id="rules_html_input" style="display:none;"></textarea>
-  </div>
-
   <button type="submit" class="btn" id="save-btn">保存配置</button>
 </form>
 
-<script src="/admin/assets/vendor/quill/quill.min.js"></script>
-<script>
-  var quill = new Quill('#rules-editor', {
-    theme: 'snow',
-    modules: {
-      toolbar: [
-        ['bold', 'italic', 'underline', 'strike'],
-        [{ header: [1, 2, 3, false] }],
-        [{ list: 'ordered' }, { list: 'bullet' }],
-        ['link', 'image'],
-        ['clean'],
-      ],
-    },
-  });
-  document.querySelector('form[action="save.php"]').addEventListener('submit', function () {
-    document.getElementById('rules_html_input').value = quill.root.innerHTML;
-  });
-</script>
 <?php
 admin_foot();

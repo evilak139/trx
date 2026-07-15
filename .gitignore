@@ -10,6 +10,9 @@
 !/public/uploads/.gitkeep
 /logs/*.log
 
+# 本地文案草稿素材，内容已整理进 public/install/seed_content.php，不提交原始草稿
+/文案.txt
+
 # 系统/编辑器
 .DS_Store
 Thumbs.db

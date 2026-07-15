@@ -36,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $siteTitle = trim((string) ($_POST['site_title'] ?? '')) ?: 'TRX能量兑换';
         $receiveAddress = trim((string) ($_POST['receive_address'] ?? ''));
+        $seedContent = isset($_POST['seed_content']);
 
         if ($receiveAddress !== '' && !TronAddress::isValid($receiveAddress)) {
             $errors[] = '收款地址格式不正确（需为 T 开头的 34 位 TRON 地址）';
@@ -46,11 +47,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $pdo = install_db_connect_5($db);
                 $configTable = $db['prefix'] . 'config';
                 $historyTable = $db['prefix'] . 'address_history';
+                $faqsTable = $db['prefix'] . 'faqs';
+
+                $seed = $seedContent ? require __DIR__ . '/seed_content.php' : null;
 
                 $stmt = $pdo->prepare(
-                    "INSERT INTO `{$configTable}` (id, site_title, receive_address) VALUES (1, ?, ?)"
+                    "INSERT INTO `{$configTable}` (id, site_title, receive_address, service_html, steps_html, notice_html, disclaimer_html) VALUES (1, ?, ?, ?, ?, ?, ?)"
                 );
-                $stmt->execute([$siteTitle, $receiveAddress]);
+                $stmt->execute([
+                    $siteTitle,
+                    $receiveAddress,
+                    $seed['service_html'] ?? null,
+                    $seed['steps_html'] ?? null,
+                    $seed['notice_html'] ?? null,
+                    $seed['disclaimer_html'] ?? null,
+                ]);
+
+                if ($seed !== null && !empty($seed['faqs'])) {
+                    $faqInsert = $pdo->prepare(
+                        "INSERT INTO `{$faqsTable}` (question, answer, sort_order) VALUES (?, ?, ?)"
+                    );
+                    foreach ($seed['faqs'] as $faq) {
+                        $faqInsert->execute([$faq['question'], $faq['answer'], $faq['sort_order']]);
+                    }
+                }
 
                 if ($receiveAddress !== '') {
                     $stmt = $pdo->prepare(
@@ -91,6 +111,10 @@ $csrf = install_csrf_token();
   <div class="form-group">
     <label>初始收款地址</label>
     <input type="text" name="receive_address" value="<?= e($receiveAddress) ?>" placeholder="T 开头的 34 位 TRON 地址，留空可稍后配置">
+  </div>
+  <div class="form-group">
+    <label><input type="checkbox" name="seed_content" value="1" checked style="width:auto;"> 预填默认文案模板（服务说明/使用步骤/重要提示/常见问题/免责声明）</label>
+    <div class="hint">内容包含【】占位符，安装完成后请到后台"文案配置"里结合实际业务替换；取消勾选则不预填，全部留空</div>
   </div>
   <div class="actions">
     <a class="btn secondary" href="step4.php">上一步</a>

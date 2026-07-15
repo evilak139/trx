@@ -16,7 +16,10 @@ return [
   `logo_path` VARCHAR(255) DEFAULT NULL,
   `customer_service_url` VARCHAR(255) DEFAULT NULL,
   `receive_address` VARCHAR(64) NOT NULL,
-  `rules_html` TEXT,
+  `service_html` TEXT COMMENT '服务说明',
+  `steps_html` TEXT COMMENT '使用步骤',
+  `notice_html` TEXT COMMENT '重要提示',
+  `disclaimer_html` TEXT COMMENT '免责声明',
   `copy_tip_text` TEXT COMMENT '复制成功后弹窗提示文案，为空时前端使用默认文案',
   `trongrid_api_key` VARCHAR(255) DEFAULT NULL COMMENT 'TronGrid API Key，选填，用于提高查询额度',
   `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -62,5 +65,15 @@ return [
   `fetched_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   UNIQUE KEY `uniq_tx_hash` (`tx_hash`),
   INDEX `idx_address_tx_time` (`address`, `tx_timestamp`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
+
+    'faqs' => "CREATE TABLE `{prefix}faqs` (
+  `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `question` VARCHAR(255) NOT NULL,
+  `answer` TEXT NOT NULL,
+  `sort_order` INT NOT NULL DEFAULT 0,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX `idx_sort_order` (`sort_order`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
 ];

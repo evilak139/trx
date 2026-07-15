@@ -21,7 +21,10 @@ $siteTitle = (string) ($config['site_title'] ?? 'TRX能量兑换');
 $logoPath = (string) ($config['logo_path'] ?? '');
 $serviceUrl = (string) ($config['customer_service_url'] ?? '');
 $address = trim((string) ($config['receive_address'] ?? ''));
-$rulesHtml = sanitize_html((string) ($config['rules_html'] ?? ''));
+$serviceHtml = sanitize_html((string) ($config['service_html'] ?? ''));
+$stepsHtml = sanitize_html((string) ($config['steps_html'] ?? ''));
+$noticeHtml = sanitize_html((string) ($config['notice_html'] ?? ''));
+$disclaimerHtml = sanitize_html((string) ($config['disclaimer_html'] ?? ''));
 $copyTipRaw = trim((string) ($config['copy_tip_text'] ?? ''));
 $copyTip = $copyTipRaw !== ''
     ? $copyTipRaw
@@ -30,6 +33,8 @@ $copyTip = $copyTipRaw !== ''
 $hasAddress = $address !== '';
 $hasLogo = $logoPath !== '';
 $hasService = is_valid_service_url($serviceUrl);
+
+$faqs = $pdo->query("SELECT question, answer FROM `{$db->table('faqs')}` ORDER BY sort_order ASC, id ASC")->fetchAll();
 ?>
 <!doctype html>
 <html lang="zh-CN">
@@ -73,9 +78,45 @@ $hasService = is_valid_service_url($serviceUrl);
   </section>
   <?php endif; ?>
 
-  <?php if ($rulesHtml !== ''): ?>
-  <section class="rules">
-    <?= $rulesHtml ?>
+  <?php if ($serviceHtml !== ''): ?>
+  <section class="content-section">
+    <h2 class="section-title">服务说明</h2>
+    <div class="section-body"><?= $serviceHtml ?></div>
+  </section>
+  <?php endif; ?>
+
+  <?php if ($stepsHtml !== ''): ?>
+  <section class="content-section">
+    <h2 class="section-title">使用步骤</h2>
+    <div class="section-body"><?= $stepsHtml ?></div>
+  </section>
+  <?php endif; ?>
+
+  <?php if ($noticeHtml !== ''): ?>
+  <section class="content-section section-notice">
+    <h2 class="section-title">重要提示</h2>
+    <div class="section-body"><?= $noticeHtml ?></div>
+  </section>
+  <?php endif; ?>
+
+  <?php if (!empty($faqs)): ?>
+  <section class="content-section">
+    <h2 class="section-title">常见问题</h2>
+    <div class="faq-list">
+      <?php foreach ($faqs as $faq): ?>
+      <details class="faq-item">
+        <summary><?= e((string) $faq['question']) ?></summary>
+        <div class="faq-answer"><?= nl2br(e((string) $faq['answer'])) ?></div>
+      </details>
+      <?php endforeach; ?>
+    </div>
+  </section>
+  <?php endif; ?>
+
+  <?php if ($disclaimerHtml !== ''): ?>
+  <section class="content-section section-disclaimer">
+    <h2 class="section-title">免责声明</h2>
+    <div class="section-body"><?= $disclaimerHtml ?></div>
   </section>
   <?php endif; ?>
 </main>
